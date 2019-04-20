@@ -1,0 +1,3 @@
+use springmongodb2
+db.roles.insert({"role": "ADMIN"})
+db.roles.insert({"role": "USER"})
