@@ -1,0 +1,32 @@
+/backend-real-app-case/HELP.md
+/backend-real-app-case/target/
+/backend-real-app-case/!.mvn/wrapper/maven-wrapper.jar
+/backend-real-app-case/mvnw
+/backend-real-app-case/mvnw.cmd
+/backend-real-app-case/.gitignore
+
+### STS ###
+/backend-real-app-case/.apt_generated
+/backend-real-app-case/.classpath
+/backend-real-app-case/.factorypath
+/backend-real-app-case/.project
+/backend-real-app-case/.settings
+/backend-real-app-case/.springBeans
+/backend-real-app-case/.sts4-cache
+
+### IntelliJ IDEA ###
+/backend-real-app-case/.idea
+/backend-real-app-case/*.iws
+/backend-real-app-case/*.iml
+/backend-real-app-case/*.ipr
+
+### NetBeans ###
+/backend-real-app-case//nbproject/private/
+/backend-real-app-case//nbbuild/
+/backend-real-app-case//dist/
+/backend-real-app-case//nbdist/
+/backend-real-app-case//.nb-gradle/
+/backend-real-app-case//build/
+
+### VS Code ###
+/backend-real-app-case/.vscode/
