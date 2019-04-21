@@ -2,6 +2,8 @@ package com.github.fr3d3rico.backendrealappcase.model;
 
 import java.util.Set;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,11 +17,13 @@ public class User {
     private String id;
     @Indexed(unique = true, direction = IndexDirection.DESCENDING, dropDups = true)
     private String email;
+    @Size(min=6, max=20)
     private String password;
     private String fullname;
     private boolean enabled;
     @DBRef
     private Set<Role> roles;
+    
     public String getId() {
         return id;
     }

@@ -30,3 +30,34 @@
 
 ### VS Code ###
 /backend-real-app-case/.vscode/
+
+
+
+
+
+
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/frontend-real-app-case/node_modules
+/frontend-real-app-case/.pnp
+/frontend-real-app-case/.pnp.js
+
+# testing
+/frontend-real-app-case/coverage
+
+# production
+/frontend-real-app-case/build
+
+# misc
+/frontend-real-app-case/.DS_Store
+/frontend-real-app-case/.env.local
+/frontend-real-app-case/.env.development.local
+/frontend-real-app-case/.env.test.local
+/frontend-real-app-case/.env.production.local
+
+/frontend-real-app-case/npm-debug.log*
+/frontend-real-app-case/yarn-debug.log*
+/frontend-real-app-case/yarn-error.log*

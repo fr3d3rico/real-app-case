@@ -21,7 +21,6 @@ import com.github.fr3d3rico.backendrealappcase.model.User;
 import com.github.fr3d3rico.backendrealappcase.repository.UserRepository;
 import com.github.fr3d3rico.backendrealappcase.services.CustomUserDetailsService;
 
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
