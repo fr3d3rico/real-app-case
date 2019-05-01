@@ -1,11 +1,14 @@
 package com.github.fr3d3rico.backendrealappcase.controller;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.github.fr3d3rico.backendrealappcase.model.JwtTokenProvider;
 import com.github.fr3d3rico.backendrealappcase.model.User;
 import com.github.fr3d3rico.backendrealappcase.repository.UserRepository;
 import com.github.fr3d3rico.backendrealappcase.services.CustomUserDetailsService;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(value = "/api/auth", produces = "application/json")
 public class AuthController {
 
     @Autowired
@@ -58,7 +64,7 @@ public class AuthController {
     public ResponseEntity register(@RequestBody User user) {
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-            throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
+        	return ResponseEntity.status(HttpStatus.CONFLICT).body("{ \"status\": "+ HttpStatus.CONFLICT.value() +", \"message\": \"User with username: " + user.getEmail() + " already exists\"}");
         }
         userService.saveUser(user);
         Map<Object, Object> model = new HashMap<>();

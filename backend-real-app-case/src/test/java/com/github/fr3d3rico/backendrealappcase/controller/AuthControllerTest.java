@@ -40,7 +40,8 @@ public class AuthControllerTest {
     public void testLogin() throws Exception {
     	mvc.perform(get("/api/auth/login")
     		      .contentType(MediaType.APPLICATION_JSON))
-    		      .andExpect(status().isOk());
+				  .andExpect(status().is(405));
+    		      //.andExpect(status().isOk());
     }
 	
 }
