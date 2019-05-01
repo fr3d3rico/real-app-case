@@ -1,8 +1,6 @@
 package com.github.fr3d3rico.backendrealappcase.controller;
 
 import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.fr3d3rico.backendrealappcase.model.JwtTokenProvider;
 import com.github.fr3d3rico.backendrealappcase.model.User;
 import com.github.fr3d3rico.backendrealappcase.repository.UserRepository;
@@ -45,30 +42,35 @@ public class AuthController {
 
     @SuppressWarnings("rawtypes")
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthBody data) {
+    public ResponseEntity login(@RequestBody AuthBody data) throws JsonProcessingException {
+    	Map<Object, Object> model = new HashMap<>();
         try {
             String username = data.getEmail();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             String token = jwtTokenProvider.createToken(username, this.users.findByEmail(username).getRoles());
-            Map<Object, Object> model = new HashMap<>();
             model.put("username", username);
             model.put("token", token);
             return ok(model);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
+        	model.put("message", "Invalid email/password supplied");
+        	model.put("status", HttpStatus.UNAUTHORIZED.value());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(model);
         }
     }
 
     @SuppressWarnings("rawtypes")
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody User user) {
+    	Map<Object, Object> model = new HashMap<>();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-        	return ResponseEntity.status(HttpStatus.CONFLICT).body("{ \"status\": "+ HttpStatus.CONFLICT.value() +", \"message\": \"User with username: " + user.getEmail() + " already exists\"}");
+        	model.put("message", "User with username: " + user.getEmail() + " already exists");
+            model.put("status", HttpStatus.CONFLICT.value());
+        	return ResponseEntity.status(HttpStatus.CONFLICT).body(model);
         }
         userService.saveUser(user);
-        Map<Object, Object> model = new HashMap<>();
         model.put("message", "User registered successfully");
-        return ok(model);
+        model.put("status", HttpStatus.OK.value());
+        return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 }
