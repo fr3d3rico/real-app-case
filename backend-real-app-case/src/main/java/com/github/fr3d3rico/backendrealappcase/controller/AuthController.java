@@ -45,10 +45,10 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthBody data) throws JsonProcessingException {
     	Map<Object, Object> model = new HashMap<>();
         try {
-            String username = data.getEmail();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            String token = jwtTokenProvider.createToken(username, this.users.findByEmail(username).getRoles());
-            model.put("username", username);
+            String email = data.getEmail();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, data.getPassword()));
+            String token = jwtTokenProvider.createToken(email, this.users.findByEmail(email).getRoles());
+            model.put("email", email);
             model.put("token", token);
             return ok(model);
         } catch (AuthenticationException e) {
@@ -64,7 +64,7 @@ public class AuthController {
     	Map<Object, Object> model = new HashMap<>();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-        	model.put("message", "User with username: " + user.getEmail() + " already exists");
+        	model.put("message", "User with email: " + user.getEmail() + " already exists");
             model.put("status", HttpStatus.CONFLICT.value());
         	return ResponseEntity.status(HttpStatus.CONFLICT).body(model);
         }

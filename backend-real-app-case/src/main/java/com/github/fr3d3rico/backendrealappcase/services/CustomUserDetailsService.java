@@ -52,7 +52,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
 	        return buildUserForAuthentication(user, authorities);
 	    } else {
-	        throw new UsernameNotFoundException("username not found");
+	        throw new UsernameNotFoundException("Email not found");
 	    }
 	}
 	

@@ -67,8 +67,8 @@ public class AuthControllerTest {
     public void testWrongLoginPOSTMethod() throws Exception {
     	Map<Object, Object> model = new HashMap<>();
     	
-    	model.put("email", "ppp@fred.com");
-    	model.put("password", "123456");
+    	model.put("email", "xxx");
+    	model.put("password", "yyy");
     	
     	mvc.perform(post(LOGIN_URL)
     			.content(new ObjectMapper().writeValueAsString(model))
