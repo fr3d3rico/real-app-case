@@ -1,66 +1,31 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import axios from "axios";
 
-class LoginComponent extends Component {
+class RegisterComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       useremail: "",
+      fullname: "",
       token: "",
       password: "",
       message: null
     };
   }
 
-  login = () => {
+  handleRegister = () => {
     const postData = {
       email: this.state.useremail,
       password: this.state.password
     };
-
-    const self = this;
-
-    axios
-      .post("/api/auth/login", postData)
-      .then(response => {
-        this.setState(
-          {
-            useremail: response.data.email,
-            token: response.data.token,
-            fullname: response.data.fullname,
-            password: "",
-            message: response.data.message
-          },
-          () => {
-            // console.log(this.state);
-            this.props.history.replace("/dashboard");
-          }
-        );
-      })
-      .catch(function(error) {
-        console.log(error.response.data);
-        self.setState({ message: error.response.data.message });
-      });
-  };
-
-  handleReset = () => {
-    this.setState({
-      useremail: "",
-      password: "",
-      token: "",
-      errorMessage: null,
-      message: null
+    axios.post("/api/auth/register", postData).then(response => {
+      console.log(response);
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-  };
-
-  handleClick = () => {
-    console.log(this.state);
   };
 
   handleChange = event => {
@@ -72,10 +37,20 @@ class LoginComponent extends Component {
   render() {
     return (
       <div className="row justify-content-center">
-        {this.state.message}
-        <Link to="/register">Register</Link>
-        <hr />
         <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email address</label>
+            <input
+              type="fullname"
+              className="form-control"
+              id="fullname"
+              name="fullname"
+              placeholder="Name"
+              value={this.state.fullname}
+              onChange={this.handleChange.bind(this)}
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">Email address</label>
             <input
@@ -90,7 +65,7 @@ class LoginComponent extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="email">Email address</label>
             <input
               type="password"
               className="form-control"
@@ -107,9 +82,9 @@ class LoginComponent extends Component {
               id="logInButton"
               type="button"
               className="btn btn-primary"
-              onClick={this.login}
+              onClick={this.registerHandle}
             >
-              Log-in
+              Register
             </button>
             <button
               id="resetButton"
@@ -126,4 +101,4 @@ class LoginComponent extends Component {
   }
 }
 
-export default LoginComponent;
+export default RegisterComponent;
